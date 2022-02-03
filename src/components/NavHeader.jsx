@@ -1,5 +1,28 @@
+import { useState, useEffect } from "react";
+import { Category } from "../models/category.model";
+import { Gender } from "../models/gender.model";
+
 
 export const Header = () => {
+  const [genders, setGenders] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      let data = Gender.from(await (await fetch('./data/gender.json')).json());
+      setGenders(data);
+    }
+    fetchData().catch(console.error);;
+  }, []);
+
+  const [categorys, setCategorys] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      let data = Category.from(await (await fetch('./data/category.json')).json());
+      setCategorys(data);
+    }
+    fetchData().catch(console.error);;
+  }, [])
+
+
 
   return (
 
@@ -15,23 +38,26 @@ export const Header = () => {
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="#">Home</a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
-            </li>
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a className="dropdown-item" href="#">Action</a></li>
-                <li><a className="dropdown-item" href="#">Another action</a></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><a className="dropdown-item" href="#">Something else here</a></li>
+            {genders.map(gender => {
+              return (
+                <li className="nav-item">
+                  <a className="nav-link active" aria-current="page" href="#">{gender.title}</a>
+                </li>
+              )
+            })}
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-black dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Catégories
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+              {categorys.map(category => {
+              return (
+                    <li><a class="dropdown-item" href="#">{category.title}</a></li>    
+              )
+            })}
               </ul>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link disabled">Disabled</a>
-            </li>
+            </div>
+            
           </ul>
           <form className="d-flex">
             <input className="form-control me-2" type="search" placeholder="Que chercher vous ?" aria-label="Search" />

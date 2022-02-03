@@ -1,17 +1,18 @@
 
 import './App.css';
 
-import { HeaderScreen } from './screen/HeaderFooterScreen';
+
 import { Header } from "./components/NavHeader";
 import { Footer } from './components/footer';
 import {GenderScreen} from './screen/genderScreen';
 
 
 
+
 function App() {
   return (
     <div className="App">
-      <Header/> 
+      <Header/>
       <GenderScreen/>
       <Footer/>
     </div>
